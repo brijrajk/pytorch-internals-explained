@@ -20,35 +20,51 @@ That's exactly what PyTorch does — at a much larger scale.
 
 ## Prerequisites
 
-```bash
-# Python 3.8+
-pip install pybind11
+- Python 3.11+, CMake 3.15+, a C++17 compiler — see the [root README](../README.md#prerequisites) for platform-specific install steps.
+- [uv](https://docs.astral.sh/uv/) for managing the Python environment.
 
-# CMake 3.15+
-# macOS:   brew install cmake
-# Ubuntu:  sudo apt install cmake
-# Windows: https://cmake.org/download
+Create the venv and install pybind11:
+
+```bash
+uv venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+uv pip install pybind11
 ```
 
 ---
 
 ## Build
 
-```bash
-# From this folder
-mkdir build && cd build
-cmake ..
-make
+Run these commands from inside the `01-pybind11-basics/` directory:
 
-# A file called ops.so (or ops.pyd on Windows) appears next to demo.py
+```bash
+cd 01-pybind11-basics               # must be here — CMakeLists.txt lives in this folder
+source ../.venv/bin/activate        # activate the venv so cmake finds the right Python + pybind11
+mkdir build && cd build
+cmake ..                            # .. points to 01-pybind11-basics/, where CMakeLists.txt is
+make
+```
+
+A file called `ops.so` (Linux/macOS) or `ops.pyd` (Windows) will appear next to `demo.py`.
+
+**Cleaning up:**
+
+```bash
+# Remove only build tree artifacts (keeps the .so next to demo.py)
+make clean
+
+# Remove everything — build artifacts + the .so next to demo.py
+make clean-all
 ```
 
 ---
 
 ## Run
 
+From the `01-pybind11-basics/` directory (with the venv active):
+
 ```bash
-# Back in 01-pybind11-basics/
+source ../.venv/bin/activate     # skip if already active
 python demo.py
 ```
 
@@ -75,8 +91,8 @@ Expected output:
 ──────────────────────────────────────────────────
   Inspecting the module
 ──────────────────────────────────────────────────
-  module   : <module 'ops' from '...'>
-  docstring: Simple C++ ops exposed to Python via pybind11
+  module   : <module 'ops' from '.../ops.cpython-3XX-....so'>
+  docstring: Simple C++ ops exposed to Python via pybind11 — mirrors how PyTorch works under the hood
   functions: ['add', 'dot', 'multiply']
 
 ──────────────────────────────────────────────────
@@ -84,6 +100,8 @@ Expected output:
 ──────────────────────────────────────────────────
   Caught Python ValueError: Vectors must have the same length
 ```
+
+> The `ValueError` on the last line is **intentional** — section 5 of the demo deliberately passes mismatched vectors to show that `std::invalid_argument` in C++ is automatically translated to a `ValueError` in Python by pybind11. This is expected output, not a crash.
 
 ---
 
