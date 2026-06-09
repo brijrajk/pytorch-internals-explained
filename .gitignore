@@ -1,6 +1,7 @@
 build/
 *.so
 *.pyd
+*_diagram.png
 *.egg-info
 __pycache__/
 .DS_Store

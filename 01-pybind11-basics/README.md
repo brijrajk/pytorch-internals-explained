@@ -45,7 +45,13 @@ cmake ..                            # .. points to 01-pybind11-basics/, where CM
 make
 ```
 
-A file called `ops.so` (Linux/macOS) or `ops.pyd` (Windows) will appear next to `demo.py`.
+A platform-specific extension module will appear next to `demo.py`, named after your Python version and architecture — for example:
+
+```
+ops.cpython-314-x86_64-linux-gnu.so   # Linux, Python 3.14
+ops.cpython-311-arm64-darwin.so       # macOS Apple Silicon, Python 3.11
+ops.cp311-win_amd64.pyd               # Windows, Python 3.11
+```
 
 **Cleaning up:**
 
