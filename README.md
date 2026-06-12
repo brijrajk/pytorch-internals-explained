@@ -22,7 +22,10 @@ Each folder matches a LinkedIn post. The code is intentionally small. The goal i
 |---|-------|------|
 | [01 — pybind11 basics](./01-pybind11-basics/) | How Python calls C++ — the bridge PyTorch is built on | [LinkedIn ↗](#) |
 | [02 — tensor dispatch](./02-tensor-dispatch/) | How PyTorch picks the right kernel (CPU / CUDA / MPS) at runtime | [LinkedIn ↗](#) |
-| 03 — autograd internals | How gradients flow backward through the computation graph | coming soon |
+| [03 — autograd internals](./03-autograd-internals/) | How gradients flow backward through the computation graph | [LinkedIn ↗](#) |
+| 04 — strides & views | How tensors actually live in memory — zero-copy transpose, slicing, broadcasting, `.contiguous()` | coming soon |
+| 05 — CUDA caching allocator | Why `nvidia-smi` shows memory PyTorch "isn't using" — and why OOM errors lie | coming soon |
+| 06 — torch.compile graph capture | How your model gets traced into a graph without running any real math | coming soon |
 
 ---
 
